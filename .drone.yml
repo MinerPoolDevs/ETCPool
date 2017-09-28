@@ -3,9 +3,10 @@ pipeline:
     image: golang:latest
     commands:
       - make
-      - rm -rf build/_workspace
-      - rm .drone.yml
-      - rm -rf .git
+#      - rm -rf build/_workspace
+#      - rm .drone.yml
+#      - rm -rf .git
+
   stop:
     image: appleboy/drone-ssh
     host: etc.minerpool.co
@@ -14,7 +15,7 @@ pipeline:
     secrets: [ SSH_KEY ]
     command_timeout: 600
     script:
-      - /bin/systemctl stop oepool oeapi oepayout oeunlock || true
+      - sudo /bin/systemctl stop oepool oeapi oepayout oeunlock || true
 
   copy:
     image: appleboy/drone-scp
@@ -23,7 +24,7 @@ pipeline:
     key: ${SSH_KEY}
     secrets: [ SSH_KEY ]
     target: /tmp/oetest/
-    source: .
+    source: build/bin/open-ethereum-pool
 
   start:
     image: appleboy/drone-ssh
@@ -33,4 +34,4 @@ pipeline:
     secrets: [ SSH_KEY ]
     command_timeout: 600
     script:
-      - /bin/systemctl start oepool oeapi oepayout oeunlock
+      - sudo /bin/systemctl start oepool oeapi oepayout oeunlock
