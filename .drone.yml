@@ -4,6 +4,7 @@ pipeline:
     commands:
       - make
       - rm -rf build/_workspace
+      - rm .drone.yml
   copy:
     image: appleboy/drone-scp
     host: etc.minerpool.co
