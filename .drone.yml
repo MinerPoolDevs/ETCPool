@@ -2,7 +2,8 @@ pipeline:
   build:
     image: golang:latest
     commands:
-      make
+      - make
+      - rm -rf build/_workspace
   copy:
     image: appleboy/drone-scp
     host: etc.minerpool.co
