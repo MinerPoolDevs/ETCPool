@@ -1,0 +1,23 @@
+pipeline:
+  build:
+    image: golang:latest
+    commands:
+      make
+  copy:
+    image: appleboy/drone-scp
+    host: etc.minerpool.co
+    username: ubuntu
+    key: ${SSH_KEY}
+    secrets: [ SSH_KEY ]
+    target: /tmp/oetest/
+    source: .
+
+#  build:
+#    image: appleboy/drone-ssh
+#    host: etc.minerpool.co
+#    username: ubuntu
+#    key: ${SSH_KEY}
+#    secrets: [ SSH_KEY ]
+#    command_timeout: 600
+#    script:
+#      - rm -rf /mnt/open-ethereum-pool-master/www/.git && cd /mnt/open-ethereum-pool-master/www/ && ./build.sh
