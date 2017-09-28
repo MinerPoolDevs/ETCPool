@@ -14,7 +14,7 @@ pipeline:
     secrets: [ SSH_KEY ]
     command_timeout: 600
     script:
-      - /bin/systemctl stop oepool oeapi oepayout oeunlock
+      - /bin/systemctl stop oepool oeapi oepayout oeunlock || true
 
   copy:
     image: appleboy/drone-scp
@@ -25,7 +25,7 @@ pipeline:
     target: /tmp/oetest/
     source: .
 
-  build:
+  start:
     image: appleboy/drone-ssh
     host: etc.minerpool.co
     username: ubuntu
